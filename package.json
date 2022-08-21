@@ -5,8 +5,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node ./src/app.js",
-    "dev": "yarn nodemon ./src/app.js"
+    "start": "NODE_ENV=prod node ./src/app.js",
+    "dev": "NODE_ENV=dev yarn nodemon ./src/app.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
