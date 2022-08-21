@@ -21,12 +21,13 @@ app.get('/test-database', async (_, res) => {
 
 app.post('/auth/patient', async (req, res) => {
   try {
-    const { identifier, password } = req.body;
+    const { email, password } = req.body;
 
-    if (identifier.length === 0 || password.length === 0) {
+    if (email.length === 0 || password.length === 0) {
       return res.sendStatus(400);
     }
 
+    const identifier = email;
     const patientExists = await connection.query(`
       SELECT * FROM patients WHERE email = $1;`, [identifier]
     );
@@ -38,7 +39,7 @@ app.post('/auth/patient', async (req, res) => {
       `SELECT * FROM users WHERE identifier = $1`, [patient.email]
     );
     
-    if (!result.rowCount === 0) res.sendStatus(404);
+    if (result.rowCount === 0) res.sendStatus(404);
     
     const user = result.rows[0];
 
@@ -66,12 +67,13 @@ app.post('/auth/patient', async (req, res) => {
 
 app.post('/auth/psico', async (req, res) => {
   try {
-    const { identifier, password } = req.body;
+    const { document, password } = req.body;
 
-    if (identifier.length === 0 || password.length === 0) {
+    if (document.length === 0 || password.length === 0) {
       return res.sendStatus(400);
     }
 
+    const identifier = document;
     const psicoExists = await connection.query(`
       SELECT * FROM psychologists WHERE document = $1;`, [identifier]
     );
