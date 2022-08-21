@@ -83,7 +83,7 @@ app.post('/auth/psico', async (req, res) => {
       `SELECT * FROM users WHERE identifier = $1`, [psico.document]
     );
     
-    if (!psico.rowCount === 0) res.sendStatus(404);
+    if (psico.rowCount === 0) res.sendStatus(404);
     
     const patient = result.rows[0];
 
